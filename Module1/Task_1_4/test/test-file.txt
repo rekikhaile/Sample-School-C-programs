@@ -1,0 +1,12 @@
+This
+file
+is
+a
+test file
+
+
+Does hexdump work for you?
+
+1234567890
+1234567890
+1234567890

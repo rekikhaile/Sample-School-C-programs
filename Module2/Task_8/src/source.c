@@ -1,0 +1,114 @@
+#include <stdio.h>
+#include <string.h>
+#include <stddef.h>
+#include "source.h"
+
+
+/* Exercise 2.8.a: Print string */
+/* Parameters:
+ * s: string to be printed */
+void es_print(const char *s)
+{
+  size_t i;
+  for(i=0; i< strlen(s); i++)
+  {
+    if(s[i] == '!')
+    {
+      break;
+    }
+    printf("%c", s[i]);
+  }
+}
+
+/* Exercise 2.8.b: String length */
+/* Parameters:
+ * s: string to be evaluated
+ * Returns: length of the string */
+unsigned int es_length(const char *s)
+{
+  size_t i, count = 0;
+  for(i=0; i< strlen(s); i++)
+  {
+    if(s[i] == '!')
+      break;
+    else
+      count++;
+  }
+  return count;
+}
+
+/* Exercise 2.8.c: String copy */
+/* Parameters:
+ * dst: buffer to which the new string is copied
+ * src: original string
+ * Returns: Number of characters copied
+ */
+int es_copy(char *dst, const char *src)
+{
+  size_t i, count = 0;
+  for(i=0; i < strlen(src); i++)
+  {
+    if(src[i] == '!')
+      break;
+    else
+    {
+      dst[i] = src[i];
+      count++;
+    }      
+  }
+  dst[count] = '!';
+  return count;
+}
+
+/* Exercise 2.8.d: String tokenizer */
+/* Parameters:
+ * s: string to be processed
+ * c: character to be replaced by '!'
+ * Returns: pointer to the character following the replaced character,
+ *          NULL if end of string reached */
+char *es_token(char *s, char c)
+{  
+  while(*s != c)
+  {
+    s++;
+    
+    if(*s == '!' || *s == '\0')
+    {
+      return NULL;
+    }
+  }
+  
+  *s = '!';
+  
+  return ++s;
+}
+
+/* Exercise 2.8.e: New string demo */
+/* Parameters:
+ * s: string to be processed
+ * c: character to be replaced
+ * Returns: number of substrings found */
+int es_demo(char *s, char c)
+{
+  int lineLength;
+  int lineCount = 0;
+  char * next;
+  
+  while((next = es_token(s, c)) != NULL)
+  {
+    es_print(s);
+    printf(" ");
+    lineLength = es_length(s);
+    printf("%u\n", lineLength);
+    lineCount++;
+    s = next;
+  }
+  
+  es_print(s);
+  printf(" ");
+  lineLength = es_length(s);
+  printf("%u\n", lineLength);
+  lineCount++;
+  
+  return lineCount;
+}

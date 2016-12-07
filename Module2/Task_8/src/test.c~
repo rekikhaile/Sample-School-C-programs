@@ -1,0 +1,123 @@
+#include <stdio.h>
+#include <string.h>
+#include <stddef.h>
+#include <stdlib.h>
+
+void es_print(const char *s)
+{
+  size_t i;
+  for(i=0; i< strlen(s); i++)
+  {
+    if(s[i] == '!')
+    {
+      break;
+    }
+    printf("%c", s[i]);
+  }
+}
+
+unsigned int es_length(const char *s)
+{
+  size_t i, count = 0;
+  for(i=0; i< strlen(s); i++)
+  {
+    if(s[i] == '!')
+      break;
+    else
+      count++;
+  }
+  return count;
+}
+
+int es_copy(char *dst, const char *src)
+{
+  size_t i, count = 0;
+  for(i=0; i < strlen(src); i++)
+  {
+    if(src[i] == '!')
+      break;
+    else
+    {
+      dst[i] = src[i];
+      count++;
+    }      
+  }
+  dst[count] = '!';
+  return count;
+}
+
+char *es_token(char *s, char c)
+{ 
+  while(*s != c)
+  {
+    s++;
+    
+    if(*s == '\0')
+    {
+      return NULL;
+    }
+  }
+  
+  *s = '!';
+  
+  return ++s;
+}
+
+int es_demo(char *s, char c)
+{
+  int lineLength;
+  int lineCount = 0;
+  char * next;
+  
+  while((next = es_token(s, c)) != NULL)
+  {
+    es_print(s);
+    printf(" ");
+    lineLength = es_length(s);
+    printf("%u\n", lineLength);
+    lineCount++;
+    s = next;
+  }
+  
+  es_print(s);
+  printf(" ");
+  lineLength = es_length(s);
+  printf("%u\n", lineLength);
+  lineCount++;
+  
+  return lineCount;
+}
+
+int main()
+{
+    /* Implement your own tests here. Below, you can find an example test
+     * for es_demo */
+    char * dst;
+    dst = malloc(sizeof(char) * 100);
+    char str[] = "yksi,kaksi,kymmenen!neljä";
+    char test[] = "Foobar123nelja!viisibaz";
+    
+    es_print(test);
+    printf("\n");
+    /*
+    printf("\n");
+    
+    printf("%u\n",es_length(str));
+    
+     printf("%u\n",es_copy(dst, str));
+    
+     es_print(dst);
+     
+     printf("\n");
+     
+     free(dst);
+     
+    char tokenTest[] = "aaa,bbb,ccc!ddd,eee";
+    printf("%c\n", *es_token(tokenTest, ','));
+    */
+    
+    //printf("Line count : %d\n", es_demo(str, ','));
+     
+    return 0;
+    
+}
